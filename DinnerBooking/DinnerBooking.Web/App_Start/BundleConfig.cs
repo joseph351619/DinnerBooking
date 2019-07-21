@@ -24,6 +24,7 @@ namespace DinnerBooking.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                        "~/Content/vuetify-v1.5.14.css",
                       "~/Content/site.css"));
         }
     }
