@@ -48,10 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoryService.cs" />
+    <Compile Include="OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DinnerBooking.Data\DinnerBooking.Data.csproj">
+      <Project>{DBEA70D2-B2EA-49B8-AA2A-0CA04E470426}</Project>
+      <Name>DinnerBooking.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DinnerBooking.Repository\DinnerBooking.Repository.csproj">
       <Project>{C8FAC0BA-AFE3-4A49-A72C-FEE988EBF996}</Project>
       <Name>DinnerBooking.Repository</Name>

@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoryCuisine.cs" />
+    <Compile Include="CategoryRepository.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="CuisineRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +56,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DinnerBooking.Data\DinnerBooking.Data.csproj">
+      <Project>{DBEA70D2-B2EA-49B8-AA2A-0CA04E470426}</Project>
+      <Name>DinnerBooking.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

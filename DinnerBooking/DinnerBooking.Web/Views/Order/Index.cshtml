@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<style type="text/css">
+
+    #tab > ul {
+        display: block;
+        margin: 0;
+        list-style: none;
+        padding: 0px;
+        background-color: black;
+    }
+
+    .tab-title {
+        list-style: none;
+    }
+
+    #tab > ul > li {
+        display: inline-block;
+        vertical-align: top;
+        font-family: 'Roboto', sans-serif !important;
+        margin: 0 -1px -1px 0;
+        border: 1px solid #BCBCBC;
+        height: 25px;
+        background: #000000;
+        padding: 0 15px;
+        list-style: none;
+        box-sizing: border-box;
+        width: 33%;
+        padding: 0px;
+        text-align: center;
+        font-size: 24px !important;
+        font-weight: 400;
+        height: 43px !important;    
+        border: 0px;
+        margin: 0px;
+    }
+
+        #tab > ul > li a {
+            color: #000;
+            text-decoration: none;
+            color: white;
+        }
+
+    #tab > ul > li.active {
+        border-bottom: 2px solid #ff9800;
+    }
+
+    #tab > .tab-inner {
+        clear: both;
+        color: #000;
+        border: 1px #BCBCBC solid;
+    }
+
+    .tab-inner {
+        padding: 15px;
+    }
+</style>
+
+<div>
+    <div>
+        <div class="jumbotron" style="background-size: cover; margin: 0px; height: 320px; background-image: url(&quot;https://picsum.photos/id/163/1280/480&quot;); background-position: center center;">
+            <div style="text-align: right">
+                <a class="v-btn v-btn--icon theme--dark">
+                </a>
+            </div>
+            <div class="container" style="text-align: center;">
+                <span class="display-2" style="color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">Great Dinner Everyday</span>
+            </div>
+        </div>
+        <div id="tab">
+            <ul>
+                @foreach (var tab in Model)
+                {
+                    <li class="tab" href="@($"#tab{tab.CategoryId}")" data-id="@tab.CategoryId">
+                        <a>@tab.CategoryName</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="container">
+            @foreach (var tab in Model)
+            {
+                <div id="@($"tab{tab.CategoryId}")" class=" tab-inner ">
+                </div>
+            }
+        </div>
+        <footer style="background-color: black">
+            <div style="text-align: center; height: 32px; color: white;">
+                ©2019 —
+                <img src="https://verdantsparks.github.io/job-applicant-exercise/img/vs_logo.1b5013d6.png" style="width: 32px; height: 32px;"/>
+                <strong>VerdantSparks</strong>
+            </div>
+        </footer>
+    </div>
+</div>
+@section Scripts{
+<script type="text/javascript">
+
+        var $tab = $('.tab');
+        $(function() {
+            var currentTab = $($tab.eq(0).addClass('active').attr('href'));
+            currentTab.show().siblings('.tab-inner').hide();
+            getPartialPage('@Url.Action("OrderPage")',
+                {
+                    categoryId: @Model[0].CategoryId
+                },
+                function(result) {
+                    currentTab.html(result);
+                });
+
+        });
+        $tab.click(function () {
+            var selectTab = $($(this).attr('href'));
+            getPartialPage('@Url.Action("OrderPage")',
+                {
+                    categoryId: $(this).data('id')
+                },
+                function(result) {
+                    selectTab.html(result);
+                });
+            selectTab.show().siblings('.tab-inner').hide();
+            $(this).addClass('active').siblings('.active').removeClass('active');
+        });
+
+
+        function getPartialPage(url, data, action) {
+            $.ajax({
+                url: url,
+                data: data,
+                type: "Get",
+                dataType: "html",
+                async:false,
+                success: action
+            });
+        }
+</script>
+}

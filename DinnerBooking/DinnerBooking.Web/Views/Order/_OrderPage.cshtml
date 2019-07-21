@@ -1,0 +1,25 @@
+﻿@model List<DinnerBooking.Data.Entities.Cuisine>
+
+@foreach (var cuisine in Model)
+{
+    <div class="col-sm-6 col-md-4 tab-inner">
+        <div class="thumbnail">
+            @*<img src="http://lorempixel.com/200/200/food/@cuisine.Id">*@
+            <div style="background-size: cover; background-image: url(&quot;http://lorempixel.com/200/200/food/@cuisine.Id&quot;); background-position: center center;">
+                <div class="container" style="width: 100%; height: 371px;">
+                    <span style="font-size: 26px; color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">仲有 <span>@cuisine.Count</span> 份</span>
+                </div>
+            </div>
+            <div class="caption">
+                <span style="color: #9e9e9e; font-size: 25px;">$@cuisine.Price</span>
+                <br />
+                <span style="font-size:30px">@cuisine.Name</span>
+                <br />
+                <span style="font-size: 18px;">@cuisine.Detail</span>
+            </div>
+            <div>
+                <a href="#" style="width:100%" class="btn btn-success" role="button">買</a>
+            </div>
+        </div>
+    </div>
+}
