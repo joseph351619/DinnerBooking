@@ -46,6 +46,9 @@
     #tab > ul > li.active {
         border-bottom: 2px solid #ff9800;
     }
+        #tab > ul > li.active > a {
+            filter: drop-shadow(green 2px 2px 1px);
+        }
 
     #tab > .tab-inner {
         clear: both;
@@ -60,10 +63,14 @@
 
 <div>
     <div>
-        <div class="jumbotron" style="background-size: cover; margin: 0px; height: 320px; background-image: url(&quot;https://picsum.photos/id/163/1280/480&quot;); background-position: center center;">
+        <div class="jumbotron" style="background-size: cover; padding-top: 0px; margin: 0px; height: 320px; background-image: url(&quot;https://picsum.photos/id/163/1280/480&quot;); background-position: center center;">
             <div style="text-align: right">
-                <a class="v-btn v-btn--icon theme--dark">
-                </a>
+                <button class="v-btn v-btn--icon theme--dark" id="btnTotalCount" href="#checkOutTab" style="margin: 20px 20px 0 0;">
+                    <span class="v-badge--overlap">
+                        <i class="glyphicon glyphicon-shopping-cart" style="font-size: 25px;"> </i>
+                        <span right="" id="totalCount" class="v-badge__badge green"></span>
+                    </span>
+                </button>
             </div>
             <div class="container" style="text-align: center;">
                 <span class="display-2" style="color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">Great Dinner Everyday</span>
@@ -85,6 +92,8 @@
                 <div id="@($"tab{tab.CategoryId}")" class=" tab-inner ">
                 </div>
             }
+            <div id="checkOutTab" class=" tab-inner ">
+            </div>
         </div>
         <footer style="background-color: black">
             <div style="text-align: center; height: 32px; color: white;">
@@ -96,7 +105,7 @@
     </div>
 </div>
 @section Scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
 
         var $tab = $('.tab');
         $(function() {
@@ -111,7 +120,7 @@
                 });
 
         });
-        $tab.click(function () {
+        $tab.click(function() {
             var selectTab = $($(this).attr('href'));
             getPartialPage('@Url.Action("OrderPage")',
                 {
@@ -123,7 +132,69 @@
             selectTab.show().siblings('.tab-inner').hide();
             $(this).addClass('active').siblings('.active').removeClass('active');
         });
+        $(document).ready(function() {
+            $(".tab-inner").on("click",
+                ".btnPurchase",
+                function() {
+                    var btn = $(this);
+                    getAjax('@Url.Action("Purchase")',
+                        {
+                            cuisineId: $(this).data('id')
+                        },
+                        function(result) {
+                            if (result.success) {
+                                $("#checkOutTab").text(result.data.total);
+                                btn.parent().parent().find('.count')[0].innerText = result.data.count;
+                            }
+                        });
+                });
+            $('#btnTotalCount').click(function() {
+                var selectTab = $($(this).attr('href'));
+                getPartialPage('@Url.Action("_CheckOut")',
+                    {},
+                    function(result) {
+                        selectTab.html(result);
+                    });
+                selectTab.show().siblings('.tab-inner').hide();
+            });
 
+            $(".tab-inner").on("click",".btnPurchaseOne", function() {
+                var btn = $(this);
+                var selectTab = $('#checkOutTab');
+                getPartialPage('@Url.Action("_CheckOutPurchase")',
+                    {
+                        cuisineId: btn.data('id'),
+                        addOne: true
+                    },
+                    function(result) {
+                        selectTab.html(result);
+                    });
+            });
+
+            $(".tab-inner").on("click",".btnRemoveOne", function() {
+                var btn = $(this);
+                var selectTab = $('#checkOutTab');
+                getPartialPage('@Url.Action("_CheckOutPurchase")',
+                    {
+                        cuisineId: btn.data('id'),
+                        addOne: false
+                    },
+                    function(result) {
+                        selectTab.html(result);
+                    });
+            });
+        });
+
+        function getAjax(url, data, action) {
+            $.ajax({
+                url: url,
+                data: data,
+                type: "Get",
+                dataType: "json",
+                async: false,
+                success: action
+            });
+        }
 
         function getPartialPage(url, data, action) {
             $.ajax({
@@ -131,9 +202,9 @@
                 data: data,
                 type: "Get",
                 dataType: "html",
-                async:false,
+                async: false,
                 success: action
             });
         }
-</script>
+    </script>
 }

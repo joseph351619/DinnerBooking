@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntities.cs" />
+    <Compile Include="DTO\BuyingCart.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Cuisine.cs" />
     <Compile Include="Migrations\201907210911306_CreateCategoryAndCuisineTable.cs" />

@@ -2,12 +2,12 @@
 
 @foreach (var cuisine in Model)
 {
-    <div class="col-sm-6 col-md-4 tab-inner">
+    <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
             @*<img src="http://lorempixel.com/200/200/food/@cuisine.Id">*@
             <div style="background-size: cover; background-image: url(&quot;http://lorempixel.com/200/200/food/@cuisine.Id&quot;); background-position: center center;">
                 <div class="container" style="width: 100%; height: 371px;">
-                    <span style="font-size: 26px; color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">仲有 <span>@cuisine.Count</span> 份</span>
+                    <span style="font-size: 26px; color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">仲有 <span class="count">@cuisine.Count</span> 份</span>
                 </div>
             </div>
             <div class="caption">
@@ -18,7 +18,7 @@
                 <span style="font-size: 18px;">@cuisine.Detail</span>
             </div>
             <div>
-                <a href="#" style="width:100%" class="btn btn-success" role="button">買</a>
+                <button style="width:100%" class="btn btn-success btnPurchase" data-id="@cuisine.Id" role="button">買</button>
             </div>
         </div>
     </div>
