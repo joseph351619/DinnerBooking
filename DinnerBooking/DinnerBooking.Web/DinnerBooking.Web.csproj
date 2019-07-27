@@ -153,6 +153,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -200,9 +201,12 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\_OrderPage.cshtml" />
     <Content Include="Views\Order\_CheckOut.cshtml" />
+    <Content Include="Views\Order\_CartCount.cshtml" />
+    <Content Include="Views\Order\_CuisineCount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -218,13 +222,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DinnerBooking.Common\DinnerBooking.Common.csproj">
+      <Project>{f67be648-b4bf-46a8-af74-1aadcbd6d6d2}</Project>
+      <Name>DinnerBooking.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DinnerBooking.Data\DinnerBooking.Data.csproj">
       <Project>{dbea70d2-b2ea-49b8-aa2a-0ca04e470426}</Project>
       <Name>DinnerBooking.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DinnerBooking.Service\DinnerBooking.Service.csproj">
+    <ProjectReference Include="..\DinnerBooking.Core\DinnerBooking.Core.csproj">
       <Project>{B33FA8BF-B2FE-4371-98F6-1B3583D2A6BC}</Project>
-      <Name>DinnerBooking.Service</Name>
+      <Name>DinnerBooking.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

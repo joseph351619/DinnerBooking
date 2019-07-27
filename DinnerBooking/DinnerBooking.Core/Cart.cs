@@ -1,10 +1,7 @@
 ﻿using DinnerBooking.Data.Entities;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Web;
+using System.Text;
 
 namespace DinnerBooking.Core
 {
@@ -73,6 +70,18 @@ namespace DinnerBooking.Core
             {
                 Cuisines.Remove(CurrentCuisine);
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Clear();
+            foreach (var cuisine in Cuisines)
+            {
+                builder.Append($"{cuisine.Name} x {cuisine.Count} ${cuisine.Count * cuisine.Price}\r\n");
+            }
+            builder.Append($"總數: ${Total}\r\n");
+            return builder.ToString();
         }
     }
 }

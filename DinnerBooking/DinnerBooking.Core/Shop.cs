@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using DinnerBooking.Data.Entities;
 using DinnerBooking.Repository;
 
@@ -78,6 +73,7 @@ namespace DinnerBooking.Core
                 PurchaseCuisine();
                 _bookingRepository.Add(booking);
                 _bookingRepository.Save();
+                booking.BookingContent = _cart.ToString();
                 AfterBooking?.Invoke(booking);
             }
             catch (Exception ex)

@@ -64,11 +64,10 @@
 <div>
     <div>
         <div class="jumbotron" style="background-size: cover; padding-top: 0px; margin: 0px; height: 320px; background-image: url(&quot;https://picsum.photos/id/163/1280/480&quot;); background-position: center center;">
-            <div style="text-align: right">
-                <button class="v-btn v-btn--icon theme--dark" id="btnTotalCount" href="#checkOutTab" style="margin: 20px 20px 0 0;">
+            <div id="cartCounter" style="text-align: right">
+                <button class="v-btn v-btn--icon theme--dark" id="btnTotalCount" style="margin: 20px 20px 0 0;">
                     <span class="v-badge--overlap">
                         <i class="glyphicon glyphicon-shopping-cart" style="font-size: 25px;"> </i>
-                        <span right="" id="totalCount" class="v-badge__badge green"></span>
                     </span>
                 </button>
             </div>
@@ -87,12 +86,18 @@
             </ul>
         </div>
         <div class="container">
-            @foreach (var tab in Model)
-            {
-                <div id="@($"tab{tab.CategoryId}")" class=" tab-inner ">
-                </div>
-            }
-            <div id="checkOutTab" class=" tab-inner ">
+            <div id="currentTab" class="tab-inner">
+
+            </div>
+            <div id="customerInfo" class="tab-inner">
+                <label>姓名</label> <input id="customerName" />
+                <label>地址</label><input id="customerAddress" />
+                <label>電話</label><input id="customerTel" />
+                <label>電子郵件</label><input id="customerEmail" />
+                <a id="btnFinishCheckOut">Purchase</a>
+            </div>
+            <div id="finishCheckOut" class="tab-inner">
+                <span id="showtime"></span> 秒後刷新頁面…
             </div>
         </div>
         <footer style="background-color: black">
@@ -106,104 +111,141 @@
 </div>
 @section Scripts{
     <script type="text/javascript">
-
-        var $tab = $('.tab');
+        var currentTab = $('#currentTab');
+        var tab = $('.tab');
+        var cartCounter = $("#cartCounter");
+        var putInOne = 0;
+        var throwOne = 1;
+        var throwAll = 2;
+        var countdownSecond = 5;
         $(function() {
-            var currentTab = $($tab.eq(0).addClass('active').attr('href'));
+            $(tab.eq(0).addClass('active').attr('href')).siblings('.tab-inner').hide();
+            setPartialViewWithAjax('@Url.Action("OrderPage")',
+                { categoryId: @Model[0].CategoryId }
+            );
             currentTab.show().siblings('.tab-inner').hide();
-            getPartialPage('@Url.Action("OrderPage")',
-                {
-                    categoryId: @Model[0].CategoryId
-                },
-                function(result) {
-                    currentTab.html(result);
-                });
-
-        });
-        $tab.click(function() {
-            var selectTab = $($(this).attr('href'));
-            getPartialPage('@Url.Action("OrderPage")',
-                {
-                    categoryId: $(this).data('id')
-                },
-                function(result) {
-                    selectTab.html(result);
-                });
-            selectTab.show().siblings('.tab-inner').hide();
             $(this).addClass('active').siblings('.active').removeClass('active');
         });
         $(document).ready(function() {
-            $(".tab-inner").on("click",
+            currentTab.on("click",
                 ".btnPurchase",
                 function() {
                     var btn = $(this);
-                    getAjax('@Url.Action("Purchase")',
+                    doAjax('@Url.Action("Purchase")',
                         {
                             cuisineId: $(this).data('id')
                         },
                         function(result) {
-                            if (result.success) {
-                                $("#checkOutTab").text(result.data.total);
-                                btn.parent().parent().find('.count')[0].innerText = result.data.count;
-                            }
+                            cartCounter.html(result.counterView);
+                            btn.parent().parent().find('.cuisineCounter')[0].innerHTML = result.cuisineCountView;
                         });
                 });
-            $('#btnTotalCount').click(function() {
-                var selectTab = $($(this).attr('href'));
-                getPartialPage('@Url.Action("_CheckOut")',
-                    {},
-                    function(result) {
-                        selectTab.html(result);
-                    });
-                selectTab.show().siblings('.tab-inner').hide();
+            tab.click(function() {
+                setPartialViewWithAjax('@Url.Action("OrderPage")',
+                    { categoryId: $(this).data('id') }
+                );
+                $(this).addClass('active').siblings('.active').removeClass('active');
             });
+            cartCounter.on('click',
+                '#btnTotalCount',
+                function() {
+                    setPartialViewWithAjax('@Url.Action("_CheckOut")', {});
+                });
 
-            $(".tab-inner").on("click",".btnPurchaseOne", function() {
-                var btn = $(this);
-                var selectTab = $('#checkOutTab');
-                getPartialPage('@Url.Action("_CheckOutPurchase")',
-                    {
-                        cuisineId: btn.data('id'),
-                        addOne: true
-                    },
-                    function(result) {
-                        selectTab.html(result);
+            currentTab.on("click",
+                ".btnPurchaseOne",
+                function() {
+                    var btn = $(this);
+                    pickCuisine(btn.data('id'), putInOne);
+                });
+            currentTab.on("click",
+                ".btnRemoveOne",
+                function() {
+                    var btn = $(this);
+                    pickCuisine(btn.data('id'), throwOne);
+                });
+            currentTab.on("click",
+                ".btnRemove",
+                function() {
+                    var btn = $(this);
+                    pickCuisine(btn.data('id'), throwAll);
+                });
+            currentTab.on("click",
+                "#btnCustomerInfoConfirm",
+                function() {
+                    $("#customerInfo").show().siblings('.tab-inner').hide();
+                    $(this).addClass('active').siblings('.active').removeClass('active');
+                });
+            $("#customerInfo").on("click",
+                "#btnFinishCheckOut",
+                function () {
+                    var currentTab = $(this);
+                    $.ajax({
+                        url: '@Url.Action("FinishCheckOut")',
+                        data: {
+                            name: $("#customerName").val(),
+                            email: $("#customerEmail").val(),
+                            phone: $("#customerTel").val(),
+                            address: $("#customerAddress").val()
+                        },
+                        type: "Get",
+                        dataType: "json",
+                        async: true,
+                        success: function (result) {
+                            if (result.success) {
+                                $("#finishCheckOut").show().siblings('.tab-inner').hide();
+                                currentTab .addClass('active').siblings('.active').removeClass('active');
+                                setInterval("Countdown()", 1000);
+                            } else {
+                                alert(result.message);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
+                        }
                     });
-            });
+                });
 
-            $(".tab-inner").on("click",".btnRemoveOne", function() {
-                var btn = $(this);
-                var selectTab = $('#checkOutTab');
-                getPartialPage('@Url.Action("_CheckOutPurchase")',
-                    {
-                        cuisineId: btn.data('id'),
-                        addOne: false
-                    },
-                    function(result) {
-                        selectTab.html(result);
-                    });
-            });
         });
+        function Countdown() {
+            $("#showtime").innerHTML = countdownSecond;
+            countdownSecond -= 1;
+            if (countdownSecond === 0)
+                location.reload();
+        }
 
-        function getAjax(url, data, action) {
+        function pickCuisine(cuisineId, disposition) {
+            setPartialViewWithAjax('@Url.Action("_CheckOutPurchase")',
+                {
+                    cuisineId: cuisineId,
+                    disposition: disposition
+                }
+            );
+        }
+
+        function setPartialViewWithAjax(url, data) {
+            doAjax(url,
+                data,
+                function(result) {
+                    cartCounter.html(result.counterView);
+                    currentTab.html(result.shopView);
+                });
+        }
+
+        function doAjax(url, data, action) {
             $.ajax({
                 url: url,
                 data: data,
                 type: "Get",
                 dataType: "json",
                 async: false,
-                success: action
-            });
-        }
-
-        function getPartialPage(url, data, action) {
-            $.ajax({
-                url: url,
-                data: data,
-                type: "Get",
-                dataType: "html",
-                async: false,
-                success: action
+                success: function(result) {
+                    if (result.success) {
+                        action(result.data);
+                    } else {
+                        alert(result.message);
+                    }
+                }
             });
         }
     </script>

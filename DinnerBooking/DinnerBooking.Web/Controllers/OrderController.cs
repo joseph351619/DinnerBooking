@@ -1,68 +1,78 @@
-﻿using DinnerBooking.Service;
-using DinnerBooking.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using DinnerBooking.Core;
+using DinnerBooking.Data;
 using DinnerBooking.Data.Entities;
-using DinnerBooking.Data.DTO;
 
 namespace DinnerBooking.Web.Controllers
 {
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
-        private readonly OrderService _orderService = new OrderService(new DinnerBooking.Data.BaseEntities());
-        private BuyingCart BuyingCart
+        private Shop _shop;
+        private Email _email;
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+            _email = new Email(new BaseEntities());
+            _shop = new Shop(Cart, new BaseEntities(), new ModelStateWrapper(ModelState));
+            _shop.AfterBooking += _email.SendEmail;
+        }
+        private Cart Cart
         {
             get
             {
-                if (Session["BuyingCart"] == null)
+                if (Session["Cart"] == null)
                 {
-                    Session["BuyingCart"] = new BuyingCart();
+                    Session["Cart"] = new Cart();
                 }
-                return Session["BuyingCart"] as BuyingCart;
+                return Session["Cart"] as Cart;
             }
-            set => Session["BuyingCart"] = value;
+            set => Session["Cart"] = value;
         }
 
         // GET: Order
         public ActionResult Index()
         {
-            return View(_orderService.GetCategories());
+            return View(_shop.GetCuisineCategories());
         }
         public ActionResult OrderPage(int categoryId)
         {
-            return PartialView("_OrderPage", _orderService.GetCuisinesInCategory(categoryId, BuyingCart));
+            return base.ApiResultWithData(new
+            {
+                shopView = RenderRazorViewToString("_OrderPage", _shop.DisplayByCategory(categoryId)),
+                counterView = RenderRazorViewToString("_CartCount", Cart.Count)
+            });
         }
         public ActionResult _CheckOut()
         {
-            return PartialView("_CheckOut", BuyingCart);
+            return base.ApiResultWithData(new
+            {
+                shopView = RenderRazorViewToString("_CheckOut", Cart),
+                counterView = RenderRazorViewToString("_CartCount", Cart.Count)
+            });
         }
-        public ActionResult _CheckOutPurchase(int cuisineId, bool? addOne)
+        public ActionResult _CheckOutPurchase(int cuisineId, Cart.Disposition disposition)
         {
-            _orderService.CheckOutPurchase(cuisineId, addOne, BuyingCart);
-            return PartialView("_CheckOut", BuyingCart);
+            _shop.CheckOutPurchase(cuisineId, disposition);
+            return base.ApiResultWithData(new
+            {
+                shopView = RenderRazorViewToString("_CheckOut", Cart),
+                counterView = RenderRazorViewToString("_CartCount", Cart.Count)
+            });
         }
         public ActionResult Purchase(int cuisineId)
         {
-            bool isSuccess = false;
-            string errorMsg = string.Empty;
-            var cuisine = _orderService.GetCuisineById(cuisineId);
-            if (cuisine != null)
+            _shop.PurchaseById(cuisineId);
+            return base.ApiResultWithData(new
             {
-                isSuccess = _orderService.PurchaseCuisine(cuisine, BuyingCart, out errorMsg);
-            }
-            return Json(new ApiModel()
-            {
-                success = isSuccess,
-                message = errorMsg,
-                data = new {
-                    count = cuisine?.Count,
-                    total = BuyingCart.Count
-                }
-            },JsonRequestBehavior.AllowGet);
+                cuisineCountView = RenderRazorViewToString("_CuisineCount", Cart.CurrentCuisine.Limit - Cart.CurrentCuisine.Count),
+                counterView = RenderRazorViewToString("_CartCount", Cart.Count)
+            });
+        }
+        public ActionResult FinishCheckOut(Booking booking)
+        {
+            _shop.CheckOut(booking);
+            Cart.Clear();
+            return ApiResultWithData(null);
         }
     }
 }
