@@ -6,8 +6,27 @@
         <div class="thumbnail">
             @*<img src="http://lorempixel.com/200/200/food/@cuisine.Id">*@
             <div style="background-size: cover; background-image: url(&quot;http://lorempixel.com/200/200/food/@cuisine.Id&quot;); background-position: center center;">
-                <div class="container" style="width: 100%; height: 371px;">
-                    <span style="font-size: 26px; color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">仲有 <span class="count">@cuisine.Count</span> 份</span>
+                <div class="container cuisineCounter" style="width: 100%; height: 371px;">
+                    @if (cuisine.Count > 2)
+                    {
+                        <span style="font-size: 26px; color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">
+                            仲有<span class="count">@cuisine.Count</span> 份
+                        </span>
+                    }
+                    else if (cuisine.Count > 0)
+                    {
+                        <span style="font-size: 26px; color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">
+                            <i aria-hidden="true" class="v-icon glyphicon glyphicon-warning-sign theme--light white--text" style="font-size: 36px;"></i>
+                            得番<span class="count">@cuisine.Count</span> 份
+                        </span>
+                    }
+                    else
+                    {
+                        <span style="font-size: 26px; color: white; filter: drop-shadow(grey 2px 2px 1px);">
+                            <i aria-hidden="true" class="v-icon  glyphicon glyphicon-remove-circle theme--light white--text" style="font-size: 36px;"></i>
+                            冇晒喇
+                        </span>
+                    }
                 </div>
             </div>
             <div class="caption">
