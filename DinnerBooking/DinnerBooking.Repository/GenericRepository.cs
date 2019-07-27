@@ -19,6 +19,11 @@ namespace DinnerBooking.Repository
             return _context.Set<TEntity>();
         }
 
+        public void Add(TEntity entity)
+        {
+            _context.Set<TEntity>().Add(entity);
+        }
+
         public void Save()
         {
             _context.SaveChanges();
