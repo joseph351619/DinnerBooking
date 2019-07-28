@@ -39,11 +39,19 @@
             <div>
                 @if (cuisine.Count > 0)
                 {
-                    <button style="width: 100%" class="btn btn-success btnPurchase" data-id="@cuisine.Id" role="button">買</button>
+                <button style="width: 100%" class="btn btn-success btnPurchase" data-id="@cuisine.Id" role="button">
+                    <span style="font-size: 20px; font-weight:bold">買</span>
+                    <span style="padding:0 40%;"></span>
+                    <i class="glyphicon glyphicon-shopping-cart" style="font-size: 20px;"> </i>
+                </button>
                 }
                 else
                 {
-                    <button style="width: 100%" class="btn btn-success btnPurchase" data-id="@cuisine.Id" role="button" disabled>買</button>
+                    <button style="width: 100%" class="btn btn-success btnPurchase" data-id="@cuisine.Id" role="button" disabled>
+                        <span style="font-size: 20px; font-weight:bold">買</span>
+                        <span style="padding: 40%;"></span>
+                        <i class="glyphicon glyphicon-shopping-cart" style="font-size: 20px;"> </i>
+                     </button>
                 }
             </div>
         </div>

@@ -3,99 +3,23 @@
     ViewBag.Title = "Index";
 }
 <link href="~/Content/loading.css" rel="stylesheet" />
-<style type="text/css">
-
-    #tab > ul {
-        display: block;
-        margin: 0;
-        list-style: none;
-        padding: 0px;
-        background-color: black;
-    }
-
-    .tab-title {
-        list-style: none;
-    }
-
-    #tab > ul > li {
-        display: inline-block;
-        vertical-align: top;
-        font-family: 'Roboto', sans-serif !important;
-        margin: 0 -1px -1px 0;
-        border: 1px solid #BCBCBC;
-        height: 25px;
-        background: #000000;
-        padding: 0 15px;
-        list-style: none;
-        box-sizing: border-box;
-        width: 33%;
-        padding: 0px;
-        text-align: center;
-        font-size: 24px !important;
-        font-weight: 400;
-        height: 43px !important;
-        border: 0px;
-        margin: 0px;
-    }
-
-        #tab > ul > li a {
-            color: #000;
-            text-decoration: none;
-            color: white;
-        }
-
-        #tab > ul > li.active {
-            border-bottom: 2px solid #ff9800;
-        }
-
-            #tab > ul > li.active > a {
-                filter: drop-shadow(green 2px 2px 1px);
-            }
-
-    #tab > .tab-inner {
-        clear: both;
-        color: #000;
-        border: 1px #BCBCBC solid;
-    }
-
-    .tab-inner {
-        padding: 15px;
-    }
-
-    .error {
-        color: red;
-    }
-
-    #loading {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 100;
-        width: 100%;
-        height: 100%;
-        padding: 10% 45%;
-        background-color: rgba(192, 192, 192, 0.5);
-    }
-    .page {
-        display: none;
-    }
-</style>
+<link href="~/Content/order-index.css" rel="stylesheet" />
+<script src="~/Scripts/base.js"></script>
 
 <div >
     <div>
-        <div class="jumbotron" style="background-size: cover; padding-top: 0px; margin: 0px; height: 320px; background-image: url(&quot;https://picsum.photos/id/163/1280/480&quot;); background-position: center center;">
-            <div id="cartCounter" style="text-align: right">
-                <div style="    width: 60px; height: 60px; background-color: black; position: absolute; right: 20px;">
-                    <button class="v-btn v-btn--icon theme--dark" id="btnTotalCount" style="margin: 20px 20px 0 0;">
+        <div class="jumbotron banner">
+            <div style="padding: 20px;">
+                <div id="cartCounter" class="cart-count">
+                    <button class="v-btn v-btn--icon" id="btnTotalCount" style="margin: 20px 20px;">
                         <span class="v-badge--overlap">
                             <i class="glyphicon glyphicon-shopping-cart" style="font-size: 25px;"> </i>
                         </span>
                     </button>
                 </div>
             </div>
-            <div class="container" style="text-align: center; margin-top: 110px;">
-                <span class="display-2" style="color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">Great Dinner Everyday</span>
+            <div class="container" style="text-align: center; margin-top: 110px; position: relative;">
+                <span class="display-2 head-font" style="color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">Great Dinner Everyday</span>
             </div>
         </div>
         <div id="tab">
@@ -103,14 +27,13 @@
                 @foreach (var tab in Model)
                 {
                     <li class="tab" href="@($"#tab{tab.CategoryId}")" data-id="@tab.CategoryId">
-                        <a>@tab.CategoryName</a>
+                        <a class="tab-headline">@tab.CategoryName</a>
                     </li>
                 }
             </ul>
         </div>
         <div class="container page">
             <div id="currentTab" class="tab-inner">
-
             </div>
             <div id="customerInfo" class="tab-inner">
                 <form id="formCustomerInfo">
@@ -131,9 +54,12 @@
                         <input class="form-control" type="email" name="email" id="customerEmail" />
                     </div>
                 </form>
-                <a class="btn btn-warning" style="width:33%" id="btnCustomerInfoCancel">取消</a>
-                <a class="btn btn-danger" style="width:33%" id="btnCustomerInfoClear">重新輸入</a>
-                <a class="btn btn-success" style="width:33%" id="btnFinishCheckOut">送出訂單</a>
+                <a class="btn btn-warning" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnCustomerInfoCancel">取消
+                    <i class="glyphicon glyphicon-arrow-left" style="font-size: 20px;"> </i></a>
+                <a class="btn btn-danger" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnCustomerInfoClear">重新輸入
+                    <i class="glyphicon glyphicon-remove-circle" style="font-size: 20px;"> </i></a>
+                <a class="btn btn-success" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnFinishCheckOut">送出訂單
+                    <i class="glyphicon glyphicon-envelope" style="font-size: 20px;"> </i></a>
             </div>
             <div id="finishCheckOut" class="tab-inner">
                 <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span>已成功落單喇，多謝幫襯！！</div>
@@ -296,6 +222,10 @@
             );
         }
 
+        setInputFilter(document.getElementById("customerTel"), function (value) {
+            return /^\d*\.?\d*$/.test(value);
+        });
+
         function setPartialViewWithAjax(url, data) {
             doAjax(url,
                 data,
@@ -305,38 +235,5 @@
                 });
         }
 
-        function doAjax(url, data, action) {
-            $.ajax({
-                url: url,
-                data: data,
-                type: "Get",
-                dataType: "json",
-                async: false,
-                success: function(result) {
-                    if (result.success) {
-                        action(result.data);
-                    } else {
-                        alert(result.message);
-                    }
-                }
-            });
-        }
-        function onReady(callback) {
-            var intervalId = window.setInterval(function() {
-                if (document.getElementsByTagName('body')[0] !== undefined) {
-                    window.clearInterval(intervalId);
-                    callback.call(this);
-                }
-            }, 1000);
-        }
-
-        function setVisible(selector, visible) {
-            document.querySelector(selector).style.display = visible ? 'block' : 'none';
-        }
-
-        onReady(function() {
-            setVisible('.page', true);
-            setVisible('#loading', false);
-        });
     </script>
 }
