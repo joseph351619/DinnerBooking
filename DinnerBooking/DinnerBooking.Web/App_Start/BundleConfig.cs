@@ -23,8 +23,8 @@ namespace DinnerBooking.Web
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/vuetify-v1.5.14.css",
                       "~/Content/bootstrap.css",
-                        "~/Content/vuetify-v1.5.14.css",
                       "~/Content/site.css"));
         }
     }

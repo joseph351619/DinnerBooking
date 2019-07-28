@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
+<link href="~/Content/loading.css" rel="stylesheet" />
 <style type="text/css">
 
     #tab > ul {
@@ -32,7 +33,7 @@
         text-align: center;
         font-size: 24px !important;
         font-weight: 400;
-        height: 43px !important;    
+        height: 43px !important;
         border: 0px;
         margin: 0px;
     }
@@ -43,12 +44,13 @@
             color: white;
         }
 
-    #tab > ul > li.active {
-        border-bottom: 2px solid #ff9800;
-    }
-        #tab > ul > li.active > a {
-            filter: drop-shadow(green 2px 2px 1px);
+        #tab > ul > li.active {
+            border-bottom: 2px solid #ff9800;
         }
+
+            #tab > ul > li.active > a {
+                filter: drop-shadow(green 2px 2px 1px);
+            }
 
     #tab > .tab-inner {
         clear: both;
@@ -59,19 +61,40 @@
     .tab-inner {
         padding: 15px;
     }
+
+    .error {
+        color: red;
+    }
+
+    #loading {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        padding: 10% 45%;
+        background-color: rgba(192, 192, 192, 0.5);
+    }
+    .page {
+        display: none;
+    }
 </style>
 
-<div>
+<div >
     <div>
         <div class="jumbotron" style="background-size: cover; padding-top: 0px; margin: 0px; height: 320px; background-image: url(&quot;https://picsum.photos/id/163/1280/480&quot;); background-position: center center;">
             <div id="cartCounter" style="text-align: right">
-                <button class="v-btn v-btn--icon theme--dark" id="btnTotalCount" style="margin: 20px 20px 0 0;">
-                    <span class="v-badge--overlap">
-                        <i class="glyphicon glyphicon-shopping-cart" style="font-size: 25px;"> </i>
-                    </span>
-                </button>
+                <div style="    width: 60px; height: 60px; background-color: black; position: absolute; right: 20px;">
+                    <button class="v-btn v-btn--icon theme--dark" id="btnTotalCount" style="margin: 20px 20px 0 0;">
+                        <span class="v-badge--overlap">
+                            <i class="glyphicon glyphicon-shopping-cart" style="font-size: 25px;"> </i>
+                        </span>
+                    </button>
+                </div>
             </div>
-            <div class="container" style="text-align: center;">
+            <div class="container" style="text-align: center; margin-top: 110px;">
                 <span class="display-2" style="color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">Great Dinner Everyday</span>
             </div>
         </div>
@@ -85,28 +108,51 @@
                 }
             </ul>
         </div>
-        <div class="container">
+        <div class="container page">
             <div id="currentTab" class="tab-inner">
 
             </div>
             <div id="customerInfo" class="tab-inner">
-                <label>姓名</label> <input id="customerName" />
-                <label>地址</label><input id="customerAddress" />
-                <label>電話</label><input id="customerTel" />
-                <label>電子郵件</label><input id="customerEmail" />
-                <a id="btnFinishCheckOut">Purchase</a>
+                <form id="formCustomerInfo">
+                    <div class="form-group">
+                        <label for="customerName">姓名</label>
+                        <input class="form-control" required="required" name="name" id="customerName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="customerAddress">地址</label>
+                        <input class="form-control" required="required" name="address" id="customerAddress" />
+                    </div>
+                    <div class="form-group">
+                        <label for="customerTel">電話</label>
+                        <input class="form-control" maxlength="8" type="tel" name="phone" id="customerTel" />
+                    </div>
+                    <div class="form-group">
+                        <label for="customerEmail">電子郵件</label>
+                        <input class="form-control" type="email" name="email" id="customerEmail" />
+                    </div>
+                </form>
+                <a class="btn btn-warning" style="width:33%" id="btnCustomerInfoCancel">取消</a>
+                <a class="btn btn-danger" style="width:33%" id="btnCustomerInfoClear">重新輸入</a>
+                <a class="btn btn-success" style="width:33%" id="btnFinishCheckOut">送出訂單</a>
             </div>
             <div id="finishCheckOut" class="tab-inner">
-                <span id="showtime"></span> 秒後刷新頁面…
+                <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span>已成功落單喇，多謝幫襯！！</div>
+                <div class="alert alert-success"><span class="glyphicon glyphicon-envelope"></span>確認電郵將送到以下電郵地址</div>
+                <div class="alert alert-success"><span class="glyphicon glyphicon-info-sign"></span>系統將於<span id="showtime"></span> 秒後回到主頁</div>
             </div>
         </div>
         <footer style="background-color: black">
             <div style="text-align: center; height: 32px; color: white;">
                 ©2019 —
-                <img src="https://verdantsparks.github.io/job-applicant-exercise/img/vs_logo.1b5013d6.png" style="width: 32px; height: 32px;"/>
+                <img src="https://verdantsparks.github.io/job-applicant-exercise/img/vs_logo.1b5013d6.png" style="width: 32px; height: 32px;" />
                 <strong>VerdantSparks</strong>
             </div>
         </footer>
+    </div>
+</div>
+<div id="loading">
+    <div class="lds-ellipsis">
+        <div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div>
     </div>
 </div>
 @section Scripts{
@@ -127,6 +173,46 @@
             $(this).addClass('active').siblings('.active').removeClass('active');
         });
         $(document).ready(function() {
+            $("#formCustomerInfo").validate({
+                rules: {
+                    name: "required",
+                    address: "required",
+                    phone: {
+                        minlength: 8,
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email:true
+                    }
+                }, messages: {
+                    name: "必填",
+                    address: "必填",
+                    phone: "需要正確電話格式",
+                    email: "需要正確電郵格式"
+                }, submitHandler: function () {
+                    var form = $("#formCustomerInfo");
+                    $.ajax({
+                        url: '@Url.Action("FinishCheckOut")',
+                        data: form.serialize(),
+                        type: "Get",
+                        dataType: "json",
+                        async: true,
+                        success: function(result) {
+                            if (result.success) {
+                                $("#finishCheckOut").show().siblings('.tab-inner').hide();
+                                currentTab.addClass('active').siblings('.active').removeClass('active');
+                                setInterval("Countdown()", 1000);
+                            } else {
+                                alert(result.message);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
+                        }
+                    });
+                }
+            });
             currentTab.on("click",
                 ".btnPurchase",
                 function() {
@@ -138,18 +224,23 @@
                         function(result) {
                             cartCounter.html(result.counterView);
                             btn.parent().parent().find('.cuisineCounter')[0].innerHTML = result.cuisineCountView;
+                            if (result.cuisineCount === 0) {
+                                btn.prop('disabled', true);
+                            }
                         });
                 });
             tab.click(function() {
                 setPartialViewWithAjax('@Url.Action("OrderPage")',
                     { categoryId: $(this).data('id') }
                 );
+                currentTab.show().siblings('.tab-inner').hide();
                 $(this).addClass('active').siblings('.active').removeClass('active');
             });
             cartCounter.on('click',
                 '#btnTotalCount',
                 function() {
                     setPartialViewWithAjax('@Url.Action("_CheckOut")', {});
+                    currentTab.show().siblings('.tab-inner').hide();
                 });
 
             currentTab.on("click",
@@ -176,39 +267,21 @@
                     $("#customerInfo").show().siblings('.tab-inner').hide();
                     $(this).addClass('active').siblings('.active').removeClass('active');
                 });
+            $("#btnCustomerInfoClear").click(function() {
+                $("#customerInfo input").val('');
+            });
+            $("#btnCustomerInfoCancel").click(function() {
+                currentTab.show().siblings('.tab-inner').hide();
+            });
             $("#customerInfo").on("click",
                 "#btnFinishCheckOut",
                 function () {
-                    var currentTab = $(this);
-                    $.ajax({
-                        url: '@Url.Action("FinishCheckOut")',
-                        data: {
-                            name: $("#customerName").val(),
-                            email: $("#customerEmail").val(),
-                            phone: $("#customerTel").val(),
-                            address: $("#customerAddress").val()
-                        },
-                        type: "Get",
-                        dataType: "json",
-                        async: true,
-                        success: function (result) {
-                            if (result.success) {
-                                $("#finishCheckOut").show().siblings('.tab-inner').hide();
-                                currentTab .addClass('active').siblings('.active').removeClass('active');
-                                setInterval("Countdown()", 1000);
-                            } else {
-                                alert(result.message);
-                            }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log(textStatus, errorThrown);
-                        }
-                    });
+                    $("#formCustomerInfo").submit();
                 });
-
         });
+
         function Countdown() {
-            $("#showtime").innerHTML = countdownSecond;
+            $("#showtime")[0].innerHTML = countdownSecond;
             countdownSecond -= 1;
             if (countdownSecond === 0)
                 location.reload();
@@ -248,5 +321,22 @@
                 }
             });
         }
+        function onReady(callback) {
+            var intervalId = window.setInterval(function() {
+                if (document.getElementsByTagName('body')[0] !== undefined) {
+                    window.clearInterval(intervalId);
+                    callback.call(this);
+                }
+            }, 1000);
+        }
+
+        function setVisible(selector, visible) {
+            document.querySelector(selector).style.display = visible ? 'block' : 'none';
+        }
+
+        onReady(function() {
+            setVisible('.page', true);
+            setVisible('#loading', false);
+        });
     </script>
 }

@@ -1,41 +1,65 @@
 ﻿@model DinnerBooking.Core.Cart
 
 <span class="display-1">晚餐購物車</span>
-<table class="table table-hover" style="font-size: 16px;">
-    <thead>
+<div>
+    <table class="table table-hover" style="font-size: 16px;">
+        <thead>
         <tr>
             <th class="col-md-2">晚餐</th>
             <th class="col-md-2">單價</th>
             <th class="col-md-2">數量</th>
             <th class="col-md-2">小結</th>
         </tr>
-    </thead>
-    @foreach (var item in Model.Cuisines)
+        </thead>
+        @if (Model.Cuisines.Count > 0)
+        {
+            foreach (var item in Model.Cuisines)
+            {
+                <tr class="">
+                    <td>@item.Name</td>
+                    <td>$@item.Price</td>
+                    <td>@item.Count</td>
+                    <td>
+                        <button class="btnPurchaseOne" style="font-size: 33px;" data-id="@item.Id">
+                            <span class="glyphicon glyphicon-plus-sign" style="color: #61b865;"></span>
+                        </button>
+                        <button class="btnRemoveOne" style="font-size: 33px;" data-id="@item.Id">
+                            <span class="glyphicon glyphicon-minus-sign" style="color: #fb8c00;"></span>
+                        </button>
+                    </td>
+                    <td>$@(item.Price * item.Count)</td>
+                    <td>
+                        <button class="btnRemove" data-id="@item.Id">
+                            <span class="glyphicon glyphicon-trash" style="color: #ff5252;font-size: 29px;"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        你揀左食乜先啦 :)
+                    </div>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="6" style="text-align:right">
+                <label style="font-size: 16px">總數: $@Model.Total</label>
+            </td>
+        </tr>
+    </table>
+</div>
+@if (Model.Cuisines.Count > 0)
+{
+    <button class="btn btn-success" style="width: 100%; font-size: 24px;" id="btnCustomerInfoConfirm">確定</button>
+}
+else
     {
-    <tr class="">
-        <td>@item.Name</td>
-        <td>$@item.Price</td>
-        <td>@item.Count</td>
-        <td><button class="btnPurchaseOne" style="font-size: 33px;" data-id="@item.Id">
-                <span class="glyphicon glyphicon-plus-sign" style="color: #61b865;"></span>
-            </button>
-            <button class="btnRemoveOne" style="font-size: 33px;" data-id="@item.Id">
-                <span class="glyphicon glyphicon-minus-sign" style="color: #fb8c00;"></span>
-            </button></td>
-        <td>$@(item.Price * item.Count)</td>
-        <td><button class="btnRemove" data-id="@item.Id">
-            <span class="glyphicon glyphicon-trash" style="color: #ff5252;font-size: 29px;"></span>
-        </button></td>
-    </tr>
+        <button class="btn btn-success" style="width: 100%; font-size: 24px;" id="btnCustomerInfoConfirm" disabled>確定</button>
     }
-    <tr>
-        <td></td>
-        <td></td>
-        <td>@Model.Count</td>
-        <td></td>
-        <td>$@Model.Total</td>
-        <td></td>
-    </tr>
-</table>
-<button class="btn btn-success" style="width: 100%; font-size: 24px;" id="btnCustomerInfoConfirm" >確定</button>
 

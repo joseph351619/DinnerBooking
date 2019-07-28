@@ -65,7 +65,8 @@ namespace DinnerBooking.Web.Controllers
             return base.ApiResultWithData(new
             {
                 cuisineCountView = RenderRazorViewToString("_CuisineCount", Cart.CurrentCuisine.Limit - Cart.CurrentCuisine.Count),
-                counterView = RenderRazorViewToString("_CartCount", Cart.Count)
+                counterView = RenderRazorViewToString("_CartCount", Cart.Count),
+                cuisineCount = Cart.CurrentCuisine.Limit - Cart.CurrentCuisine.Count
             });
         }
         public ActionResult FinishCheckOut(Booking booking)

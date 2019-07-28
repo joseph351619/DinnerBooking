@@ -15,7 +15,7 @@
                     }
                     else if (cuisine.Count > 0)
                     {
-                        <span style="font-size: 26px; color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">
+                        <span style="font-size: 26px; color: white; filter: drop-shadow(red 2px 2px 1px);">
                             <i aria-hidden="true" class="v-icon glyphicon glyphicon-warning-sign theme--light white--text" style="font-size: 36px;"></i>
                             得番<span class="count">@cuisine.Count</span> 份
                         </span>
@@ -37,7 +37,14 @@
                 <span style="font-size: 18px;">@cuisine.Detail</span>
             </div>
             <div>
-                <button style="width:100%" class="btn btn-success btnPurchase" data-id="@cuisine.Id" role="button">買</button>
+                @if (cuisine.Count > 0)
+                {
+                    <button style="width: 100%" class="btn btn-success btnPurchase" data-id="@cuisine.Id" role="button">買</button>
+                }
+                else
+                {
+                    <button style="width: 100%" class="btn btn-success btnPurchase" data-id="@cuisine.Id" role="button" disabled>買</button>
+                }
             </div>
         </div>
     </div>
