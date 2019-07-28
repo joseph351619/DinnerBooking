@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Web", "DinnerBooking.Web\DinnerBooking.Web.csproj", "{143098A7-347A-44E4-B9E8-324B92F87F59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Service", "DinnerBooking.Service\DinnerBooking.Service.csproj", "{B33FA8BF-B2FE-4371-98F6-1B3583D2A6BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Core", "DinnerBooking.Core\DinnerBooking.Core.csproj", "{B33FA8BF-B2FE-4371-98F6-1B3583D2A6BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Repository", "DinnerBooking.Repository\DinnerBooking.Repository.csproj", "{C8FAC0BA-AFE3-4A49-A72C-FEE988EBF996}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Data", "DinnerBooking.Data\DinnerBooking.Data.csproj", "{DBEA70D2-B2EA-49B8-AA2A-0CA04E470426}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Common", "DinnerBooking.Common\DinnerBooking.Common.csproj", "{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DBEA70D2-B2EA-49B8-AA2A-0CA04E470426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBEA70D2-B2EA-49B8-AA2A-0CA04E470426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBEA70D2-B2EA-49B8-AA2A-0CA04E470426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

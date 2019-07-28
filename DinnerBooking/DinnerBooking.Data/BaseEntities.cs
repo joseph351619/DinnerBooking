@@ -13,5 +13,6 @@ namespace DinnerBooking.Data
         public BaseEntities() : base("BaseEntities") { }
         public DbSet<Category> Category { get; set; }
         public DbSet<Cuisine> Cuisine { get; set; }
+        public DbSet<Booking> Booking { get; set; }
     }
 }

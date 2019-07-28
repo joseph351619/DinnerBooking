@@ -1,0 +1,11 @@
+﻿@model int
+
+<button class="v-btn v-btn--icon theme--dark" id="btnTotalCount" href="#checkOutTab" style="margin: 20px 20px;">
+    <span class="v-badge--overlap">
+        <i class="glyphicon glyphicon-shopping-cart" style="font-size: 25px;"> </i>
+        @if (Model > 0)
+        {
+            <span right="" id="totalCount" class="v-badge__badge green">@Model</span>
+        }
+    </span>
+</button>
