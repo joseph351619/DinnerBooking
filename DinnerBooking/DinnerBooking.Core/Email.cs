@@ -33,12 +33,12 @@ namespace DinnerBooking.Core
             var client = new SmtpClient("smtp.gmail.com", 587)
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("sungfuchiu@gmail.com", "mftguzrolgiaaspf"),
+                Credentials = new NetworkCredential("josephsungfu@gmail.com", "qqgmnxhistkphdci"),
                 EnableSsl = true,
             };
             client.SendCompleted += SetEmailSent;
             Task.Run(() => client.SendAsync(
-                "sungfuchiu@gmail.com", 
+                "josephsungfu@gmail.com", 
                 booking.Email,
                 "每日晚餐訂單確認通知", 
                 booking.ToString(), 
