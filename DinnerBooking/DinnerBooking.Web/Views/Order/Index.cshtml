@@ -5,9 +5,7 @@
 <link href="~/Content/loading.css" rel="stylesheet" />
 <link href="~/Content/order-index.css" rel="stylesheet" />
 <script src="~/Scripts/base.js"></script>
-
-<div >
-    <div>
+<div class="main">
         <div class="jumbotron banner">
             <div style="padding: 20px;">
                 <div id="cartCounter" class="cart-count">
@@ -32,41 +30,42 @@
                 }
             </ul>
         </div>
-        <div class="container page">
-            <div id="currentTab" class="tab-inner">
+<div class="container page">
+    <div id="currentTab" class="tab-inner">
+    </div>
+    <div id="customerInfo" class="tab-inner">
+        <form id="formCustomerInfo">
+            <div class="form-group">
+                <label for="customerName">姓名</label>
+                <input class="form-control" required="required" name="name" id="customerName" />
             </div>
-            <div id="customerInfo" class="tab-inner">
-                <form id="formCustomerInfo">
-                    <div class="form-group">
-                        <label for="customerName">姓名</label>
-                        <input class="form-control" required="required" name="name" id="customerName" />
-                    </div>
-                    <div class="form-group">
-                        <label for="customerAddress">地址</label>
-                        <input class="form-control" required="required" name="address" id="customerAddress" />
-                    </div>
-                    <div class="form-group">
-                        <label for="customerTel">電話</label>
-                        <input class="form-control" maxlength="8" type="tel" name="phone" id="customerTel" />
-                    </div>
-                    <div class="form-group">
-                        <label for="customerEmail">電子郵件</label>
-                        <input class="form-control" type="email" name="email" id="customerEmail" />
-                    </div>
-                </form>
-                <a class="btn btn-warning" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnCustomerInfoCancel">取消
-                    <i class="glyphicon glyphicon-arrow-left" style="font-size: 20px;"> </i></a>
-                <a class="btn btn-danger" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnCustomerInfoClear">重新輸入
-                    <i class="glyphicon glyphicon-remove-circle" style="font-size: 20px;"> </i></a>
-                <a class="btn btn-success" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnFinishCheckOut">送出訂單
-                    <i class="glyphicon glyphicon-envelope" style="font-size: 20px;"> </i></a>
+            <div class="form-group">
+                <label for="customerAddress">地址</label>
+                <input class="form-control" required="required" name="address" id="customerAddress" />
             </div>
-            <div id="finishCheckOut" class="tab-inner">
-                <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span>已成功落單喇，多謝幫襯！！</div>
-                <div class="alert alert-success"><span class="glyphicon glyphicon-envelope"></span>確認電郵將送到以下電郵地址</div>
-                <div class="alert alert-success"><span class="glyphicon glyphicon-info-sign"></span>系統將於<span id="showtime"></span> 秒後回到主頁</div>
+            <div class="form-group">
+                <label for="customerTel">電話</label>
+                <input class="form-control" maxlength="8" type="tel" name="phone" id="customerTel" />
             </div>
-        </div>
+            <div class="form-group">
+                <label for="customerEmail">電子郵件</label>
+                <input class="form-control" type="email" name="email" id="customerEmail" />
+            </div>
+        </form>
+        <a class="btn btn-warning" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnCustomerInfoCancel">取消
+            <i class="glyphicon glyphicon-arrow-left" style="font-size: 20px;"> </i></a>
+        <a class="btn btn-danger" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnCustomerInfoClear">重新輸入
+            <i class="glyphicon glyphicon-remove-circle" style="font-size: 20px;"> </i></a>
+        <a class="btn btn-success" style="width: 33%; font-size: 20px; font-weight: bold;" id="btnFinishCheckOut">送出訂單
+            <i class="glyphicon glyphicon-envelope" style="font-size: 20px;"> </i></a>
+    </div>
+    <div id="finishCheckOut" class="tab-inner">
+        <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span>已成功落單喇，多謝幫襯！！</div>
+        <div class="alert alert-success"><span class="glyphicon glyphicon-envelope"></span>確認電郵將送到以下電郵地址</div>
+        <div class="alert alert-success"><span class="glyphicon glyphicon-info-sign"></span>系統將於<span id="showtime"></span> 秒後回到主頁</div>
+    </div>
+</div>
+</div>
         <footer style="background-color: black">
             <div style="text-align: center; height: 32px; color: white;">
                 ©2019 —
@@ -74,8 +73,6 @@
                 <strong>VerdantSparks</strong>
             </div>
         </footer>
-    </div>
-</div>
 <div id="loading">
     <div class="lds-ellipsis">
         <div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div>

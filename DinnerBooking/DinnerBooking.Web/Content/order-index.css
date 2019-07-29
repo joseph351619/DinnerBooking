@@ -34,8 +34,9 @@
     }
 
         #tab > ul > li a {
-            color: #000;
+            color: #d0caca;
             text-decoration-color: #23527c;
+            filter: drop-shadow(green 2px 2px 1px);
             /*color: white;*/
         }
             #tab > ul > li a :hover {
@@ -48,7 +49,7 @@
         }
 
             #tab > ul > li.active > a {
-                filter: drop-shadow(green 2px 2px 1px);
+                color: white;
             }
 
 #tab > .tab-inner {
@@ -96,4 +97,13 @@
     background-color: #212121;
     position: absolute;
     right: 20px
+}
+
+footer {
+    clear: both;
+    position: relative;
+    margin-top: -32px;
+}
+.main {
+    min-height: 100vh;
 }
