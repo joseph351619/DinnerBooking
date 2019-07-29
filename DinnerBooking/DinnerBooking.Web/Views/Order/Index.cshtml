@@ -31,7 +31,7 @@
             </ul>
         </div>
 <div class="container page">
-    <div id="currentTab" class="tab-inner">
+    <div id="mainTab" class="tab-inner">
     </div>
     <div id="customerInfo" class="tab-inner">
         <form id="formCustomerInfo">
@@ -80,7 +80,7 @@
 </div>
 @section Scripts{
     <script type="text/javascript">
-        var currentTab = $('#currentTab');
+        var mainTab = $('#mainTab');
         var tab = $('.tab');
         var cartCounter = $("#cartCounter");
         var putInOne = 0;
@@ -89,10 +89,10 @@
         var countdownSecond = 5;
         $(function() {
             $(tab.eq(0).addClass('active').attr('href')).siblings('.tab-inner').hide();
-            setPartialViewWithAjax('@Url.Action("OrderPage")',
+            setPartialViewWithAjax('@Url.Action("_OrderPage")',
                 { categoryId: @Model[0].CategoryId }
             );
-            currentTab.show().siblings('.tab-inner').hide();
+            mainTab.show().siblings('.tab-inner').hide();
             $(this).addClass('active').siblings('.active').removeClass('active');
         });
         $(document).ready(function() {
@@ -124,7 +124,7 @@
                         success: function(result) {
                             if (result.success) {
                                 $("#finishCheckOut").show().siblings('.tab-inner').hide();
-                                currentTab.addClass('active').siblings('.active').removeClass('active');
+                                mainTab.addClass('active').siblings('.active').removeClass('active');
                                 setInterval("Countdown()", 1000);
                             } else {
                                 alert(result.message);
@@ -136,11 +136,11 @@
                     });
                 }
             });
-            currentTab.on("click",
+            mainTab.on("click",
                 ".btnPurchase",
                 function() {
                     var btn = $(this);
-                    doAjax('@Url.Action("Purchase")',
+                    doAjax('@Url.Action("_Purchase")',
                         {
                             cuisineId: $(this).data('id')
                         },
@@ -153,38 +153,38 @@
                         });
                 });
             tab.click(function() {
-                setPartialViewWithAjax('@Url.Action("OrderPage")',
+                setPartialViewWithAjax('@Url.Action("_OrderPage")',
                     { categoryId: $(this).data('id') }
                 );
-                currentTab.show().siblings('.tab-inner').hide();
+                mainTab.show().siblings('.tab-inner').hide();
                 $(this).addClass('active').siblings('.active').removeClass('active');
             });
             cartCounter.on('click',
                 '#btnTotalCount',
                 function() {
                     setPartialViewWithAjax('@Url.Action("_CheckOut")', {});
-                    currentTab.show().siblings('.tab-inner').hide();
+                    mainTab.show().siblings('.tab-inner').hide();
                 });
 
-            currentTab.on("click",
+            mainTab.on("click",
                 ".btnPurchaseOne",
                 function() {
                     var btn = $(this);
                     pickCuisine(btn.data('id'), putInOne);
                 });
-            currentTab.on("click",
+            mainTab.on("click",
                 ".btnRemoveOne",
                 function() {
                     var btn = $(this);
                     pickCuisine(btn.data('id'), throwOne);
                 });
-            currentTab.on("click",
+            mainTab.on("click",
                 ".btnRemove",
                 function() {
                     var btn = $(this);
                     pickCuisine(btn.data('id'), throwAll);
                 });
-            currentTab.on("click",
+            mainTab.on("click",
                 "#btnCustomerInfoConfirm",
                 function() {
                     $("#customerInfo").show().siblings('.tab-inner').hide();
@@ -194,7 +194,7 @@
                 $("#customerInfo input").val('');
             });
             $("#btnCustomerInfoCancel").click(function() {
-                currentTab.show().siblings('.tab-inner').hide();
+                mainTab.show().siblings('.tab-inner').hide();
             });
             $("#customerInfo").on("click",
                 "#btnFinishCheckOut",
@@ -228,7 +228,7 @@
                 data,
                 function(result) {
                     cartCounter.html(result.counterView);
-                    currentTab.html(result.shopView);
+                    mainTab.html(result.shopView);
                 });
         }
 

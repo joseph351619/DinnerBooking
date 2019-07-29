@@ -34,7 +34,7 @@ namespace DinnerBooking.Web.Controllers
         {
             return View(_shop.GetCuisineCategories());
         }
-        public ActionResult OrderPage(int categoryId)
+        public ActionResult _OrderPage(int categoryId)
         {
             return base.ApiResultWithData(new
             {
@@ -59,7 +59,7 @@ namespace DinnerBooking.Web.Controllers
                 counterView = RenderRazorViewToString("_CartCount", Cart.Count)
             });
         }
-        public ActionResult Purchase(int cuisineId)
+        public ActionResult _Purchase(int cuisineId)
         {
             _shop.PurchaseById(cuisineId);
             return base.ApiResultWithData(new
