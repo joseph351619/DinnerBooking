@@ -15,8 +15,8 @@ namespace DinnerBooking.Core
         private readonly BookingRepository _bookingRepository;
 
         public delegate void AfterBookingEventHandler(Booking booking);
-
         public event AfterBookingEventHandler AfterBooking;
+
         public Shop(Cart cart, DbContext context, Common.IValidationDictionary validationDictionary)
         {
             _cart = cart;
@@ -81,8 +81,7 @@ namespace DinnerBooking.Core
                 ValidationDictionary.AddGeneralError(ex.Message);
             }
         }
-        
-        
+
         public void PurchaseCuisine()
         {
             (from all in _cuisineRepository.ReadAll().ToList()
