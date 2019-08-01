@@ -13,7 +13,8 @@ Server為IIS 7+
 .Net Framework 若用Visual studio 2017應該可以直接執行。  
 
 .Net Core 
-若用Visual studio 2017應該可以直接執行。  
+若用Visual studio 2017應該可以直接執行。
+或是也可以使用VS code執行。  
 如果要用指令則可先  
 dotnet restore 還原套件的相依性  
 dotnet run --project "DinnerBooking.Core.Web" 接著指定core版本的web來執行  
@@ -41,4 +42,5 @@ IValidationDictioanry結合MVC的ModelState在Controller與Core層使用，
 <img src="https://github.com/joseph351619/DinnerBooking/blob/master/IMG_1546.jpg" width="600" height="400">
 
 ## 注意事項：
+因為目前是連接到外部的資料庫，所以網頁的反應速度比較慢。
 目前是由gmail充當smtp server，請寄信不要過於頻繁，之前有其他信箱被鎖。
