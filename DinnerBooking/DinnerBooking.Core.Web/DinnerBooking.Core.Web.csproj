@@ -28,7 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DinnerBooking.Core.Core\DinnerBooking.Core.Core.csproj" />
     <ProjectReference Include="..\DinnerBooking.Core.Data\DinnerBooking.Core.Data.csproj" />
-    <ProjectReference Include="..\DinnerBooking.Web\DinnerBooking.Web.csproj" />
   </ItemGroup>
 
 </Project>
