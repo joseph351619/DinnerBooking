@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DinnerBooking.Common\DinnerBooking.Common.csproj" />
+    <ProjectReference Include="..\DinnerBooking.Core.Repository\DinnerBooking.Core.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

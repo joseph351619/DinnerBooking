@@ -13,6 +13,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Data", "Dinne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Common", "DinnerBooking.Common\DinnerBooking.Common.csproj", "{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Core.Data", "DinnerBooking.Core.Data\DinnerBooking.Core.Data.csproj", "{4FA97E5F-967C-44A2-A57F-F2D75FAC9BE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Core.Web", "DinnerBooking.Core.Web\DinnerBooking.Core.Web.csproj", "{15A27FE4-D09F-4193-8C95-921F107B2B97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Core.Common", "DinnerBooking.Core.Common\DinnerBooking.Core.Common.csproj", "{EEDD7B24-F5C5-4493-A68D-7AADF9BFE341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Core.Core", "DinnerBooking.Core.Core\DinnerBooking.Core.Core.csproj", "{D53FBBCD-7590-4612-AD5A-2209E3166246}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinnerBooking.Core.Repository", "DinnerBooking.Core.Repository\DinnerBooking.Core.Repository.csproj", "{01CAEB25-FB46-4EF6-9915-7FAD4890090B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +49,26 @@ Global
 		{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F67BE648-B4BF-46A8-AF74-1AADCBD6D6D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FA97E5F-967C-44A2-A57F-F2D75FAC9BE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FA97E5F-967C-44A2-A57F-F2D75FAC9BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FA97E5F-967C-44A2-A57F-F2D75FAC9BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FA97E5F-967C-44A2-A57F-F2D75FAC9BE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15A27FE4-D09F-4193-8C95-921F107B2B97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15A27FE4-D09F-4193-8C95-921F107B2B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15A27FE4-D09F-4193-8C95-921F107B2B97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15A27FE4-D09F-4193-8C95-921F107B2B97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEDD7B24-F5C5-4493-A68D-7AADF9BFE341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEDD7B24-F5C5-4493-A68D-7AADF9BFE341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEDD7B24-F5C5-4493-A68D-7AADF9BFE341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEDD7B24-F5C5-4493-A68D-7AADF9BFE341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D53FBBCD-7590-4612-AD5A-2209E3166246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D53FBBCD-7590-4612-AD5A-2209E3166246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D53FBBCD-7590-4612-AD5A-2209E3166246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D53FBBCD-7590-4612-AD5A-2209E3166246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01CAEB25-FB46-4EF6-9915-7FAD4890090B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01CAEB25-FB46-4EF6-9915-7FAD4890090B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01CAEB25-FB46-4EF6-9915-7FAD4890090B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01CAEB25-FB46-4EF6-9915-7FAD4890090B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

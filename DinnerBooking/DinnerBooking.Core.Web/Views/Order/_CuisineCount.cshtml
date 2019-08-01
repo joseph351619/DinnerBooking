@@ -1,0 +1,25 @@
+﻿@model int?
+@if (Model != null)
+{
+    if (Model > 2)
+    {
+        <span style="font-size: 26px; color: white; filter: drop-shadow(Darkgreen 2px 2px 1px);">
+            仲有<span>@Model</span> 份
+        </span>
+    }
+    else if (Model > 0)
+    {
+        <span style="font-size: 26px; color: white; filter: drop-shadow(red 2px 2px 1px);">
+            <i aria-hidden="true" class="v-icon glyphicon glyphicon-warning-sign theme--light white--text" style="font-size: 36px;"></i>
+            得番<span>@Model</span> 份
+        </span>
+    }
+    else
+    {
+        <span style="font-size: 26px; color: white; filter: drop-shadow(grey 2px 2px 1px);">
+            <i aria-hidden="true" class="v-icon glyphicon glyphicon-remove-circle theme--light white--text" style="font-size: 36px;"></i>
+            冇晒喇
+        </span>
+    }
+
+}
