@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VueCliMiddleware;
 
 namespace DinnerBooking.Core.Web
 {
@@ -63,12 +64,22 @@ namespace DinnerBooking.Core.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
+            
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Order}/{action=Index}/{id?}");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "client-app";
+                if (env.IsDevelopment())
+                {
+                    spa.UseVueCli(npmScript: "serve", port:8080);
+                }
             });
         }
     }
