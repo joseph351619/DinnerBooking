@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -29,6 +29,12 @@
   <ItemGroup>
     <ProjectReference Include="..\DinnerBooking.Core.Core\DinnerBooking.Core.Core.csproj" />
     <ProjectReference Include="..\DinnerBooking.Core.Data\DinnerBooking.Core.Data.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <TypeScriptCompile Include="client-app\src\api\mock\index.ts" />
+    <TypeScriptCompile Include="client-app\src\api\server\index.ts" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-import  cuisines from './data/cuisines.json'
+import  cuisines from './data/cuisines.json' 
 
 const fetch = (mockData : object, time = 0) => {
     return new Promise((resolve) =>{
